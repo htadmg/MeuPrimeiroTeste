@@ -13,6 +13,8 @@ namespace MyClassesTest
 
         private string _GoodFileName;
 
+        private const string FILE_NAME = @"fileToDeploy.txt";
+
         public TestContext TestContext { get; set; }
 
         #region Teste Initialize e Cleanup
@@ -71,6 +73,25 @@ namespace MyClassesTest
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
             }
         }
+
+        [TestMethod]
+        [Owner("Agata")]
+        [DeploymentItem(FILE_NAME)]
+        public void FileNameDoesExistsUsingDeploymentItem()
+        {
+            FileProcess fp = new FileProcess();
+            string fileName;
+            bool fromCall;
+            
+            fileName = $@"{TestContext.DeploymentDirectory}\{FILE_NAME}";
+
+            TestContext.WriteLine($"Cheking File: {fileName}");
+            fromCall = fp.FileExists(fileName);
+
+
+            Assert.IsTrue(fromCall);
+        }
+
         [TestMethod]
         [Timeout(3100)]
         public void SimulateTimeOut()
