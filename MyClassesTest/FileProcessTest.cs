@@ -25,15 +25,31 @@ namespace MyClassesTest
 
             bool fromCall;
 
-            fromCall = fp.FileExists(@"C:\Users\Desktop\Smartbility\bin\Debug\net5.0\Smartbility.exe");
+            fromCall = fp.FileExists(@"C:\Smartbility.exe");
 
-            Assert.IsTrue(fromCall);
+            Assert.IsFalse(fromCall);
         }
         [TestMethod]
-        public void FileNameNullOrEmpty_ThorwsArgumentNullException()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void FileNameNullOrEmpty_throwsArgumentNullException()
         {
+            FileProcess fp = new FileProcess();
 
-            Assert.Inconclusive();
+            fp.FileExists("");
+        }
+        [TestMethod]
+        public void FileNameNullOrEmpty_throwsArgumentNullException_UsingTryCatch()
+        {
+            FileProcess fp = new FileProcess();
+            try
+            {
+                fp.FileExists("");
+            }
+            catch (ArgumentNullException)
+            {
+                return;
+            }
+            Assert.Fail("Fail expected");
         }
     }
 }
